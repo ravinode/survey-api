@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Built-By: kira
+Build-Jdk: 9.0.4
+Implementation-Title: survey-rest-api
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: org.rk.survey
+Implementation-Vendor: Pivotal Software, Inc.
+Implementation-URL: http://projects.spring.io/spring-boot/survey-rest-
+ api/
+Created-By: Maven Integration for Eclipse
+
