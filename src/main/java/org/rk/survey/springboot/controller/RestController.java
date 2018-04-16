@@ -2,10 +2,13 @@ package org.rk.survey.springboot.controller;
 
 import javax.sql.DataSource;
 
-
+import org.rk.survey.springboot.bo.QuestionAnswerBO;
 import org.rk.survey.springboot.bo.SessionBO;
 import org.rk.survey.springboot.model.CompanyDetailsReq;
 import org.rk.survey.springboot.model.CompanyDetailsResp;
+import org.rk.survey.springboot.model.Question;
+import org.rk.survey.springboot.model.QuestionReq;
+import org.rk.survey.springboot.model.QuestionResp;
 import org.rk.survey.springboot.model.SessionReq;
 import org.rk.survey.springboot.model.SessionResp;
 import org.slf4j.Logger;
@@ -23,6 +26,9 @@ public class RestController {
 
 	@Autowired
 	private SessionBO sessionBo;
+	
+	@Autowired
+	private QuestionAnswerBO questionBo;
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	@RequestMapping(value = "/checkSession", method = RequestMethod.POST)
@@ -57,6 +63,24 @@ public class RestController {
 			e.printStackTrace();
 		}
 		return companyResp;
+	}
+	
+	
+	@RequestMapping(value = "/getQuestion", method = RequestMethod.POST)
+	public QuestionResp getQuestion(@RequestBody QuestionReq question) {
+		logger.info("Inside questionResp"+question.getSessionID());
+		QuestionResp questionResp = new QuestionResp();
+		try {
+			questionResp = questionBo.getQuestion(question);
+		}
+		catch(Exception e)
+		{
+			org.rk.survey.springboot.model.Exception ex = new org.rk.survey.springboot.model.Exception();
+			ex.setMessage(e.getMessage());
+			ex.setStatus("FAILURE");
+			e.printStackTrace();
+		}
+		return questionResp;
 	}
 	
 }

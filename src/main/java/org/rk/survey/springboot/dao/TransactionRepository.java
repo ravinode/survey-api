@@ -2,8 +2,11 @@ package org.rk.survey.springboot.dao;
 
 import java.util.List;
 
+import org.rk.survey.springboot.model.Answer;
 import org.rk.survey.springboot.model.CompanyDetails;
 import org.rk.survey.springboot.model.CompanyDetailsReq;
+import org.rk.survey.springboot.model.Question;
+import org.rk.survey.springboot.model.QuestionReq;
 import org.rk.survey.springboot.model.Session;
 import org.rk.survey.springboot.model.SessionReq;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,5 +60,41 @@ public class TransactionRepository {
 	        return result;
 
 	    }
+	 
+	 public List<Question> getQuestions(QuestionReq req) throws Exception{
+
+	        List<Question> result = jdbcTemplate.query(
+	                "SELECT questionID, question, question_option, answerID, sessionID FROM X_QUESTION where "
+	                + "questionID ='"+req.getQuestionID()+"' AND sessionID = '"+req.getSessionID()+"' ",
+	                (rs, rowNum) -> new Question(
+	                		   rs.getString("questionID"),
+	                		   rs.getString("question"), 
+	                		   rs.getString("question_option"),
+	                		   rs.getString("answerID"),
+	                		   rs.getString("sessionID")
+	                     )
+	        );
+	        
+
+
+	        return result;
+
+	    }
+	 
+	 public List<Answer> getAnswer(int req) throws Exception{
+
+	        List<Answer> result = jdbcTemplate.query(
+	                "SELECT answer, answerID FROM X_ANSWER where "
+	                + "answerID ='"+req+"'",
+	                (rs, rowNum) -> new Answer(
+	                		   rs.getString("answerID"),
+	                		   rs.getString("answer")
+	                		
+	                     )
+	        );
+	        return result;
+
+	    }
+
 
 }
